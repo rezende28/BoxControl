@@ -1,0 +1,234 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+
+body{
+
+    background:#f2f5f9;
+
+}
+
+
+.container{
+
+    width:90%;
+    max-width:1000px;
+    margin:40px auto;
+
+}
+
+
+
+header{
+
+    text-align:center;
+    margin-bottom:30px;
+
+}
+
+
+header h1{
+
+    color:#1261a0;
+    font-size:40px;
+
+}
+
+
+header p{
+
+    color:#666;
+
+}
+
+
+
+.cadastro,
+.lista{
+
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:25px;
+    box-shadow:0 5px 15px #00000015;
+
+}
+
+
+
+h2{
+
+    color:#1261a0;
+    margin-bottom:20px;
+
+}
+
+
+
+form{
+
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+
+}
+
+
+
+input,
+select{
+
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #ccc;
+
+}
+
+
+
+button{
+
+    margin-top:15px;
+    padding:12px;
+    background:#1261a0;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+
+}
+
+
+button:hover{
+
+    background:#0d4c7d;
+
+}
+
+
+
+
+/* Tabela */
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    background:#1261a0;
+    color:white;
+    padding:12px;
+
+}
+
+
+
+td{
+
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+
+}
+
+
+
+
+
+/* Código da caixa */
+
+.codigo-caixa{
+
+    display:flex;
+    align-items:center;
+    gap:5px;
+
+}
+
+
+
+.codigo-caixa span{
+
+    font-weight:bold;
+    font-size:16px;
+
+}
+
+
+
+.codigo-caixa input{
+
+    width:35px;
+    height:32px;
+    padding:3px;
+    text-align:center;
+    font-size:14px;
+
+}
+
+
+.codigo-caixa input[name="s"]{
+
+    width:45px;
+
+}
+
+
+
+
+
+/* Botão excluir */
+
+.btn-excluir{
+
+    background:#dc3545;
+    padding:8px 12px;
+    margin:0;
+    font-size:13px;
+
+}
+
+
+
+.btn-excluir:hover{
+
+    background:#bb2d3b;
+
+}
+
+
+
+
+/* Botão relatório */
+
+.btn-relatorio{
+
+    background:#198754;
+    width:220px;
+
+}
+
+
+
+.btn-relatorio:hover{
+
+    background:#157347;
+
+}
+
+td a {
+
+    display: inline-block;
+    margin: 5px;
+
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Relatório BoxControl</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<section class="lista">
+
+
+<h2>📋 Relatório de Caixas</h2>
+
+
+{% for caixa in caixas %}
+
+<p>{{ caixa }}</p>
+
+{% endfor %}
+
+
+
+<br>
+
+
+<a href="/">
+
+<button>
+
+Voltar
+
+</button>
+
+</a>
+
+
+</section>
+
+
+</div>
+
+
+</body>
+
+</html>

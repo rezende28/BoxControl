@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BoxControl</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+
+<header>
+
+<h1>📦 BoxControl</h1>
+
+<p>Controle de caixas</p>
+
+
+<br>
+
+
+<a href="/enviadas">
+
+<button type="button">
+
+🚚 Ver Enviadas
+
+</button>
+
+</a>
+
+
+</header>
+
+
+
+
+
+<section class="cadastro">
+
+
+<h2>Cadastrar Caixa</h2>
+
+
+<form action="/cadastrar" method="POST">
+
+
+
+<label>Unidade</label>
+
+<select name="unidade" required>
+
+<option value="HAS">HAS</option>
+
+<option value="HASI">HASI</option>
+
+<option value="Botafogo">Botafogo</option>
+
+</select>
+
+
+
+
+
+
+<label>Mês/Ano da Caixa</label>
+
+<input
+type="text"
+name="mes"
+placeholder="Ex: Julho/2026"
+required
+>
+
+
+
+
+
+
+
+<label>Código da Caixa</label>
+
+
+<div class="codigo-caixa">
+
+
+
+<span>C</span>
+
+<input 
+type="text"
+name="c"
+maxlength="2"
+placeholder="03"
+required
+>
+
+
+
+
+<span>P</span>
+
+<input 
+type="text"
+name="p"
+maxlength="2"
+placeholder="20"
+required
+>
+
+
+
+
+<input 
+type="text"
+name="numero"
+maxlength="2"
+placeholder="01"
+required
+>
+
+
+
+
+<span>D</span>
+
+<input 
+type="text"
+name="d"
+maxlength="2"
+placeholder="01"
+required
+>
+
+
+
+
+<span>S</span>
+
+<input 
+type="text"
+name="s"
+maxlength="3"
+placeholder="012"
+required
+>
+
+
+
+</div>
+
+
+
+
+
+
+
+<label>Status</label>
+
+
+<input
+type="text"
+value="Em Produção"
+disabled
+>
+
+
+
+
+
+
+<button type="submit">
+
+Cadastrar Caixa
+
+</button>
+
+
+</form>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="lista">
+
+
+<h2>Caixas cadastradas</h2>
+
+
+
+
+
+
+<form action="/relatorio" method="POST">
+
+
+
+<button 
+type="button"
+onclick="selecionarTodas()"
+>
+
+☑ Selecionar Todas
+
+</button>
+
+
+
+
+
+
+
+
+
+<table>
+
+
+<tr>
+
+<th>Selecionar</th>
+
+<th>Código</th>
+
+<th>Unidade</th>
+
+<th>Mês/Ano</th>
+
+<th>Status</th>
+
+<th>Data Cadastro</th>
+
+<th>Ações</th>
+
+</tr>
+
+
+
+
+
+
+
+
+{% for caixa in caixas %}
+
+
+
+
+
+<tr>
+
+
+
+
+
+<td>
+
+
+{% if caixa.status == "Pronta" %}
+
+
+<input
+type="checkbox"
+name="caixas"
+value="{{ caixa.numero }}"
+>
+
+
+{% else %}
+
+-
+
+{% endif %}
+
+
+
+</td>
+
+
+
+
+
+
+
+
+<td>
+
+{{ caixa.numero }}
+
+</td>
+
+
+
+
+
+
+<td>
+
+{{ caixa.unidade }}
+
+</td>
+
+
+
+
+
+
+<td>
+
+{{ caixa.mes }}
+
+</td>
+
+
+
+
+
+
+<td>
+
+{{ caixa.status }}
+
+</td>
+
+
+
+
+
+
+<td>
+
+{{ caixa.data_cadastro }}
+
+</td>
+
+
+
+
+
+
+
+
+
+<td>
+
+
+
+
+
+{% if caixa.status == "Em Produção" %}
+
+
+<a
+href="/pronta/{{ caixa.id }}"
+class="btn-pronta"
+>
+
+✅ Marcar Pronta
+
+</a>
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+<a
+href="/excluir/{{ caixa.id }}"
+class="btn-excluir"
+onclick="return confirmarExclusao()"
+>
+
+❌ Excluir
+
+</a>
+
+
+
+
+
+</td>
+
+
+
+
+
+
+</tr>
+
+
+
+
+
+
+{% endfor %}
+
+
+
+
+
+
+
+
+
+</table>
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+<button
+type="submit"
+class="btn-relatorio"
+>
+
+📋 Gerar Relatório
+
+</button>
+
+
+
+
+
+
+</form>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+
+</body>
+
+</html>

@@ -1,24 +1,31 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
 from datetime import datetime
+import os
+
 
 app = Flask(__name__)
 
 BANCO = "database.db"
 
 
+
 def conectar():
 
     conexao = sqlite3.connect(BANCO)
+
     conexao.row_factory = sqlite3.Row
 
     return conexao
 
 
 
+
+
 def criar_banco():
 
     conexao = conectar()
+
     cursor = conexao.cursor()
 
 
@@ -44,7 +51,9 @@ def criar_banco():
 
 
     conexao.commit()
+
     conexao.close()
+
 
 
 
@@ -80,6 +89,8 @@ def index():
 
 
 
+
+
 @app.route("/cadastrar", methods=["POST"])
 def cadastrar():
 
@@ -97,8 +108,6 @@ def cadastrar():
 
     unidade = request.form["unidade"]
 
-
-    # agora recebe direto Julho/2026
     mes = request.form["mes"]
 
 
@@ -137,11 +146,15 @@ def cadastrar():
 
 
     conexao.commit()
+
     conexao.close()
 
 
 
     return redirect("/")
+
+
+
 
 
 
@@ -170,6 +183,7 @@ def marcar_pronta(id):
 
 
     conexao.commit()
+
     conexao.close()
 
 
@@ -221,6 +235,7 @@ def relatorio():
 
 
     conexao.commit()
+
     conexao.close()
 
 
@@ -278,6 +293,7 @@ def enviadas():
 
 
 
+
 @app.route("/excluir/<int:id>")
 def excluir(id):
 
@@ -299,6 +315,7 @@ def excluir(id):
 
 
     conexao.commit()
+
     conexao.close()
 
 
@@ -319,4 +336,7 @@ if __name__ == "__main__":
     criar_banco()
 
 
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000))
+    )

@@ -256,29 +256,16 @@ def relatorio():
 @app.route("/enviadas")
 def enviadas():
 
-
     conexao = conectar()
-
-
 
     caixas = conexao.execute(
         """
         SELECT *
-
         FROM caixas
-
-        WHERE status = 'Enviada'
-
-        ORDER BY id DESC
-
         """
     ).fetchall()
 
-
-
     conexao.close()
-
-
 
     return render_template(
         "enviadas.html",

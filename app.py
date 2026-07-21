@@ -40,6 +40,8 @@ def criar_banco():
 
             mes TEXT NOT NULL,
 
+            responsavel TEXT NOT NULL,
+
             status TEXT NOT NULL,
 
             data_cadastro TEXT NOT NULL,
@@ -59,7 +61,6 @@ def criar_banco():
 
 
 
-
 @app.route("/")
 def index():
 
@@ -68,7 +69,8 @@ def index():
 
     caixas = conexao.execute(
         """
-        SELECT * FROM caixas
+        SELECT *
+        FROM caixas
         WHERE status != 'Enviada'
         ORDER BY id DESC
         """
@@ -82,8 +84,6 @@ def index():
         "index.html",
         caixas=caixas
     )
-
-
 
 
 
@@ -110,9 +110,11 @@ def cadastrar():
 
     mes = request.form["mes"]
 
+    responsavel = request.form["responsavel"]
 
 
-    data = datetime.now().strftime("%d/%m/%Y")
+
+    data = datetime.now().strftime("%d/%m/%Y às %H:%M")
 
 
 
@@ -127,17 +129,19 @@ def cadastrar():
             numero,
             unidade,
             mes,
+            responsavel,
             status,
             data_cadastro
         )
 
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?)
         """,
 
         (
             codigo_completo,
             unidade,
             mes,
+            responsavel,
             "Em Produção",
             data
         )
@@ -152,8 +156,6 @@ def cadastrar():
 
 
     return redirect("/")
-
-
 
 
 
@@ -204,7 +206,7 @@ def relatorio():
     caixas = request.form.getlist("caixas")
 
 
-    data_envio = datetime.now().strftime("%d/%m/%Y")
+    data_envio = datetime.now().strftime("%d/%m/%Y às %H:%M")
 
 
 
@@ -258,20 +260,24 @@ def enviadas():
 
     conexao = conectar()
 
+
     caixas = conexao.execute(
         """
         SELECT *
         FROM caixas
+        WHERE status = 'Enviada'
+        ORDER BY id DESC
         """
     ).fetchall()
 
+
     conexao.close()
+
 
     return render_template(
         "enviadas.html",
         caixas=caixas
     )
-
 
 
 

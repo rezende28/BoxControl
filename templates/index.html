@@ -74,6 +74,18 @@
 
 
 
+<label>Responsável</label>
+
+<input
+type="text"
+name="responsavel"
+placeholder="Digite o nome do responsável"
+required
+>
+
+
+
+
 
 <label>Mês/Ano da Caixa</label>
 
@@ -83,8 +95,6 @@ name="mes"
 placeholder="Ex: Julho/2026"
 required
 >
-
-
 
 
 
@@ -109,7 +119,6 @@ required
 
 
 
-
 <span>P</span>
 
 <input 
@@ -119,7 +128,6 @@ maxlength="2"
 placeholder="20"
 required
 >
-
 
 
 
@@ -133,7 +141,6 @@ required
 
 
 
-
 <span>D</span>
 
 <input 
@@ -143,7 +150,6 @@ maxlength="2"
 placeholder="01"
 required
 >
-
 
 
 
@@ -160,8 +166,6 @@ required
 
 
 </div>
-
-
 
 
 
@@ -230,8 +234,6 @@ onclick="selecionarTodas()"
 
 
 
-
-
 <table>
 
 
@@ -243,16 +245,17 @@ onclick="selecionarTodas()"
 
 <th>Unidade</th>
 
+<th>Responsável</th>
+
 <th>Mês/Ano</th>
 
 <th>Status</th>
 
-<th>Data Cadastro</th>
+<th>Cadastrado em</th>
 
 <th>Ações</th>
 
 </tr>
-
 
 
 
@@ -301,7 +304,6 @@ value="{{ caixa.numero }}"
 
 
 
-
 <td>
 
 {{ caixa.numero }}
@@ -316,6 +318,17 @@ value="{{ caixa.numero }}"
 <td>
 
 {{ caixa.unidade }}
+
+</td>
+
+
+
+
+
+
+<td>
+
+{{ caixa.responsavel }}
 
 </td>
 
@@ -358,8 +371,6 @@ value="{{ caixa.numero }}"
 
 
 
-
-
 <td>
 
 
@@ -381,9 +392,6 @@ class="btn-pronta"
 
 
 {% endif %}
-
-
-
 
 
 
@@ -425,11 +433,7 @@ onclick="return confirmarExclusao()"
 
 
 
-
-
 </table>
-
-
 
 
 
@@ -472,6 +476,7 @@ class="btn-relatorio"
 
 
 </div>
+
 
 
 

@@ -1,12 +1,19 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import os
 
 
 app = Flask(__name__)
 
 BANCO = "database.db"
+
+
+def horario_brasilia():
+    return datetime.now(
+        ZoneInfo("America/Sao_Paulo")
+    ).strftime("%d/%m/%Y às %H:%M")
 
 
 
@@ -114,7 +121,7 @@ def cadastrar():
 
 
 
-    data = datetime.now().strftime("%d/%m/%Y às %H:%M")
+    data = horario_brasilia()
 
 
 
@@ -206,7 +213,7 @@ def relatorio():
     caixas = request.form.getlist("caixas")
 
 
-    data_envio = datetime.now().strftime("%d/%m/%Y às %H:%M")
+    data_envio = horario_brasilia() 
 
 
 

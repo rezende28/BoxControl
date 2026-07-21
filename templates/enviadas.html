@@ -2,41 +2,82 @@
 <html lang="pt-br">
 
 <head>
+
 <meta charset="UTF-8">
+
 <title>Caixas Enviadas</title>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
+
 <body>
 
+
 <div class="container">
+
 
 <h2>🚚 Caixas Enviadas</h2>
 
 
+
 <table>
 
+
 <tr>
+
 <th>Código</th>
+
 <th>Unidade</th>
+
+<th>Responsável</th>
+
 <th>Mês</th>
-<th>Data Envio</th>
+
+<th>Cadastrado em</th>
+
+<th>Enviada em</th>
+
 </tr>
+
 
 
 {% for caixa in caixas %}
 
+
 <tr>
 
-<td>{{ caixa.numero }}</td>
 
-<td>{{ caixa.unidade }}</td>
+<td>
+{{ caixa.numero }}
+</td>
 
-<td>{{ caixa.mes }}</td>
 
-<td>{{ caixa.data_envio }}</td>
+<td>
+{{ caixa.unidade }}
+</td>
+
+
+<td>
+{{ caixa.responsavel }}
+</td>
+
+
+<td>
+{{ caixa.mes }}
+</td>
+
+
+<td>
+{{ caixa.data_cadastro }}
+</td>
+
+
+<td>
+{{ caixa.data_envio }}
+</td>
+
 
 </tr>
 
@@ -44,19 +85,28 @@
 {% endfor %}
 
 
+
 </table>
+
 
 
 <br>
 
+
 <a href="/">
+
 <button>
+
 Voltar
+
 </button>
+
 </a>
 
 
+
 </div>
+
 
 </body>
 

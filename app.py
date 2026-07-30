@@ -48,6 +48,8 @@ def criar_banco():
             mes TEXT NOT NULL,
 
             responsavel TEXT NOT NULL,
+            
+            observacoes TEXT,
 
             status TEXT NOT NULL,
 
@@ -104,12 +106,11 @@ def cadastrar():
 
     c = request.form["c"]
     p = request.form["p"]
-    numero = request.form["numero"]
     d = request.form["d"]
     s = request.form["s"]
 
 
-    codigo_completo = f"C{c} P{p} {numero} D{d} S{s}"
+    codigo_completo = f"C{c} P{p} D{d} S{s}"
 
 
 
@@ -119,7 +120,7 @@ def cadastrar():
 
     responsavel = request.form["responsavel"]
 
-
+    observacoes = request.form.get("observacoes", "")
 
     data = horario_brasilia()
 
@@ -132,26 +133,28 @@ def cadastrar():
     conexao.execute(
         """
         INSERT INTO caixas
-        (
-            numero,
-            unidade,
-            mes,
-            responsavel,
-            status,
-            data_cadastro
-        )
+(
+    numero,
+    unidade,
+    mes,
+    responsavel,
+    observacoes,
+    status,
+    data_cadastro
+)
 
-        VALUES (?, ?, ?, ?, ?, ?)
+VALUES (?, ?, ?, ?, ?, ?, ?)
         """,
 
         (
-            codigo_completo,
-            unidade,
-            mes,
-            responsavel,
-            "Em Produção",
-            data
-        )
+    codigo_completo,
+    unidade,
+    mes,
+    responsavel,
+    observacoes,
+    "Em Produção",
+    data
+)
     )
 
 

@@ -1,13 +1,16 @@
 from flask import Flask, render_template, request, redirect
-import sqlite3
+import psycopg2
+from psycopg2.extras import RealDictCursor
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = Flask(__name__)
 
-BANCO = "database.db"
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 
 def horario_brasilia():
@@ -19,9 +22,10 @@ def horario_brasilia():
 
 def conectar():
 
-    conexao = sqlite3.connect(BANCO)
-
-    conexao.row_factory = sqlite3.Row
+    conexao = psycopg2.connect(
+        DATABASE_URL,
+        cursor_factory=RealDictCursor
+    )
 
     return conexao
 
@@ -39,7 +43,7 @@ def criar_banco():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS caixas (
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
 
             numero TEXT NOT NULL,
 
@@ -76,14 +80,18 @@ def index():
     conexao = conectar()
 
 
-    caixas = conexao.execute(
+    cursor = conexao.cursor()
+
+    cursor.execute(
         """
         SELECT *
         FROM caixas
         WHERE status != 'Enviada'
         ORDER BY id DESC
         """
-    ).fetchall()
+    )
+
+    caixas = cursor.fetchall()
 
 
     conexao.close()
@@ -125,12 +133,13 @@ def cadastrar():
     data = horario_brasilia()
 
 
-
     conexao = conectar()
+    
+    cursor = conexao.cursor()
 
 
 
-    conexao.execute(
+    cursor.execute(
         """
         INSERT INTO caixas
 (
@@ -143,7 +152,7 @@ def cadastrar():
     data_cadastro
 )
 
-VALUES (?, ?, ?, ?, ?, ?, ?)
+VALUES (%s, %s, %s, %s, %s, %s, %s)
         """,
 
         (
@@ -154,8 +163,8 @@ VALUES (?, ?, ?, ?, ?, ?, ?)
     observacoes,
     "Em Produção",
     data
-)
     )
+)
 
 
 
@@ -180,14 +189,15 @@ def marcar_pronta(id):
 
     conexao = conectar()
 
+    cursor = conexao.cursor()
 
-    conexao.execute(
+    cursor.execute(
         """
         UPDATE caixas
 
         SET status = 'Pronta'
 
-        WHERE id = ?
+        WHERE id = %s
         """,
 
         (id,)
@@ -222,19 +232,19 @@ def relatorio():
 
     conexao = conectar()
 
-
+    cursor = conexao.cursor()
 
     for codigo in caixas:
 
 
-        conexao.execute(
+        cursor.execute(
             """
             UPDATE caixas
 
             SET status = 'Enviada',
-                data_envio = ?
+                data_envio = %s
 
-            WHERE numero = ?
+            WHERE numero = %s
 
             """,
 
@@ -270,15 +280,18 @@ def enviadas():
 
     conexao = conectar()
 
+    cursor = conectar
 
-    caixas = conexao.execute(
+    cursor.execute(
         """
         SELECT *
         FROM caixas
         WHERE status = 'Enviada'
         ORDER BY id DESC
         """
-    ).fetchall()
+    )
+    
+    caixas = cursor.fetchall()
 
 
     conexao.close()
@@ -293,51 +306,31 @@ def enviadas():
 
 
 
-
-
-
-
 @app.route("/excluir/<int:id>")
 def excluir(id):
 
-
     conexao = conectar()
 
+    cursor = conexao.cursor()
 
-
-    conexao.execute(
+    cursor.execute(
         """
         DELETE FROM caixas
 
-        WHERE id = ?
+        WHERE id = %s
         """,
 
         (id,)
     )
 
-
-
     conexao.commit()
 
     conexao.close()
 
-
-
     return redirect("/")
 
-
-
-
-
-
-
-
-
 if __name__ == "__main__":
-
-
     criar_banco()
-
 
     app.run(
         host="0.0.0.0",

@@ -280,7 +280,7 @@ def enviadas():
 
     conexao = conectar()
 
-    cursor = conectar
+    cursor = conexao.cursor()
 
     cursor.execute(
         """
